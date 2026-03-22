@@ -7,16 +7,13 @@ function App() {
     <>
       <section id="center">
         <div>
-          <h1>Onegai ToDo</h1>
-        </div>
-        <div>
           <TodoList />
         </div>
       </section>
 
-      <div className="ticks"></div>
 
-      <section id="next-steps">
+
+      <section id="links">
         <div id="social">
           <ul>
             <li>

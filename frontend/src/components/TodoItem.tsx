@@ -9,7 +9,7 @@ interface TodoItemProps {
 
 export function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
   return (
-    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0" }}>
+    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0", background: ""}}>
       <input
         type="checkbox"
         checked={todo.isFinished}
