@@ -5,15 +5,13 @@ function App() {
 
   return (
     <>
-      <section id="center">
-        <div>
-          <TodoList />
-        </div>
-      </section>
 
 
+      <section id="header">
 
-      <section id="links">
+        <a href="https://www.youtube.com/@onegai_01" className="text-button">Ooka</a>
+
+
         <div id="social">
           <ul>
             <li>
@@ -30,7 +28,15 @@ function App() {
             </li>
           </ul>
         </div>
+
       </section>
+
+      <section id="center">
+        <div>
+          <TodoList />
+        </div>
+      </section>
+
     </>
   )
 }

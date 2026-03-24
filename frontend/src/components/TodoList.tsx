@@ -23,8 +23,6 @@ export function TodoList() {
 
   return (
     <div style={{ maxWidth: "400px", margin: "2rem auto", fontFamily: "sans-serif" }}>
-      <h1>Ooka</h1>
-
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
         <input
           type="text"
