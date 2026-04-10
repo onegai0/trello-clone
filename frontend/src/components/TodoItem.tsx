@@ -35,15 +35,18 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
 
 
 
-        <div className=' absolute top-[2.5px]'>
-          <Checkbox
-            checked={todo.completed}
-            onChange={() => onToggle(todo.id)} />
-        </div>
 
-        <div className=' select-none cursor-pointer '>
+
+        <div className=' select-none cursor-pointer'>
           <div className='w-auto relative mt-0.5 ps-6 items-start  leading-4.5 text-[14px] wrap-break-word text-lg text-[#e9e9e9] font-bold  '>
-            <span className="break-words">{todo.title}</span>
+
+            <div className=' absolute left-0 top-[0px]' onClick={(e) => e.stopPropagation()}>
+              <Checkbox
+                checked={todo.completed}
+                onChange={() => onToggle(todo.id)} />
+            </div>
+
+            <div className="break-words">{todo.title}</div>
 
             <div className=" size-[20px] absolute top-0 right-0 px-[14px] transition-opacity opacity-0 group-hover:opacity-100  bg-[#292929]">
 
@@ -61,6 +64,7 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
             <div >Mewing</div>
           </div>
         </div>
+
 
       </div>
     </div>
