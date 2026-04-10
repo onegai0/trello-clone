@@ -64,6 +64,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                                             setEditPopupActive(false);
                                         }}
                                         onCancel={() => setEditPopupActive(false)}
+                                        initialValue={list.title}
                                     />
                                 </Popup>
                             )}

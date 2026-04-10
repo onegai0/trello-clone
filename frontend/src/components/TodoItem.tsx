@@ -28,6 +28,7 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
               setEditPopupActive(false);
             }}
             onCancel={() => setEditPopupActive(false)}
+            initialValue={todo.title}
           />
         </Popup>
       )}

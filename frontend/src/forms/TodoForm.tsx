@@ -1,12 +1,12 @@
 import { useState } from "react";
+import type { Form } from '../interfaces/IForm';
 
-interface TodoFormProps {
-  onConfirm: (title: string) => void;
-  onCancel: () => void;
+interface TodoFormProps extends Form {
+initialBorder?: boolean;
 }
 
-export function TodoForm({ onConfirm, onCancel }: TodoFormProps) {
-  const [value, setValue] = useState("");
+export function TodoForm({ onConfirm, onCancel, initialValue = "" }: TodoFormProps) {
+  const [value, setValue] = useState(initialValue);
 
   return (
     <div className="flex flex-col gap-2">

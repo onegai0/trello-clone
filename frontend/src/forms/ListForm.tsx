@@ -1,12 +1,11 @@
 import { useState } from "react";
-
-interface ListFormProps {
-  onConfirm: (title: string) => void;
-  onCancel: () => void;
+import type { Form } from '../interfaces/IForm';
+interface ListFormProps  extends Form {
+initialBorder?: boolean;
 }
 
-export function ListForm({ onConfirm, onCancel }: ListFormProps) {
-  const [value, setValue] = useState("");
+export function ListForm({ onConfirm, onCancel, initialValue = "" }: ListFormProps) {
+  const [value, setValue] = useState(initialValue);
 
   return (
     <div className="flex flex-col gap-2">
