@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -12,14 +14,20 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod());
 });
 
+var connectionString = "Host=db;Port=5432;Username=postgres;Password=grandeonegai;Database=meubanco";
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+	options.UseNpgsql(connectionString));
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI();
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+	db.Database.Migrate();
 }
-
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthorization();

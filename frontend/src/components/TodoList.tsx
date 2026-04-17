@@ -11,7 +11,7 @@ import { ListForm } from "../forms/ListForm";
 
 export interface TodoListProps {
     list: TodoListType;
-    onAddTodo: (listId: number, text: string) => void;
+    onAddTodo: (text: string) => void;
     onEditTodo: (listId: number, todoId: number, text: string) => void;
     onToggleTodo: (listId: number, todoId: number) => void;
     onDeleteTodo: (listId: number, todoId: number) => void;
@@ -94,7 +94,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
 
                                 <div className="flex flex-col gap-2 overflow-y-auto">
                                     {list.items.map((todo: Todo) => (
-                                        <TodoItem key={todo.id} todo={todo} onToggle={() => onToggleTodo(list.id, todo.id)} onDelete={() => onDeleteTodo(list.id, todo.id)} onEdit={(todoId, title) => onEditTodo(list.id, todoId, title)} />
+                                        <TodoItem key={todo.id} todo={todo} onToggle={() => onToggleTodo(list.id, todo.id)} onDelete={() => onDeleteTodo(todo.id, list.id)} onEdit={(todoId, title) => onEditTodo(list.id, todoId, title)} />
                                     ))}
                                 </div>
 
@@ -111,7 +111,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                                 <Popup title="" onClose={() => setAddPopupActive(false)}>
                                     <TodoForm
                                         onConfirm={(title) => {
-                                            onAddTodo(list.id, title);
+                                            onAddTodo( title);
                                             setAddPopupActive(false);
                                         }}
                                         onCancel={() => setAddPopupActive(false)}

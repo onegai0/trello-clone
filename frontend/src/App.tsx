@@ -9,6 +9,7 @@ import { TodoList } from './components/TodoList';
 import type { TodoListType } from "./interfaces/ITodoList"
 import { Popup } from './components/Popup';
 import { ListForm } from './forms/ListForm';
+import { useTodos } from './hooks/useTodos';
 
 
 function App() {
@@ -51,23 +52,11 @@ function App() {
     );
   }
 
-  const addTodo = (listId: number, text: string) => {
-    setLists(prev =>
-      prev.map(list =>
-        list.id === listId
-          ? { ...list, items: [...list.items, { id: list.items.length + 1, title: text, completed: false }] }
-          : list
-      )
-    )
-  }
 
   const deleteList = (id: number) => {
     setLists(prev => prev.filter(list => list.id !== id));
   }
 
-  const deleteTodo = (id: number) => {
-    setLists(prev => prev.map(list => ({ ...list, items: list.items.filter(item => item.id !== id) })));
-  }
 
   const statusColor: Record<number, string> = {
     0: 'bg-yellow-400',
@@ -110,22 +99,13 @@ function App() {
   }
 
   const [popupActive, setPopupActive] = useState(false);
-  function toggleTodo(listId: number, todoId: number) {
-    setLists(prev =>
-      prev.map(list =>
-        list.id === listId
-          ? {
-            ...list,
-            items: list.items.map(item =>
-              item.id === todoId
-                ? { ...item, completed: !item.completed }
-                : item
-            )
-          }
-          : list
-      )
-    );
-  }
+
+    const {
+    todos,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+  } = useTodos();
 
   return (
     <>
@@ -246,9 +226,25 @@ function App() {
             </div>
 
 
-            {lists.map(list => (
-              <TodoList key={list.id} list={list} onAddTodo={addTodo} onToggleTodo={toggleTodo} onEditList={editList} onDeleteTodo={deleteTodo} onDeleteList={deleteList} onEditTodo={editTodo} />
-            ))}
+{lists.map(list => {
+  const listWithItems = {
+    ...list,
+    items: todos,
+  };
+
+  return (
+    <TodoList
+      key={list.id}
+      list={listWithItems}
+      onAddTodo={addTodo}
+      onToggleTodo={toggleTodo}
+      onEditList={editList}
+      onDeleteTodo={deleteTodo}
+      onDeleteList={deleteList}
+      onEditTodo={editTodo}
+    />
+  );
+})}
 
             <div className=' flex'>
               <div className=" bg-[#4e4e4e] w-[300px]  h-[45px] rounded-md flex  px-2 items-center gap-2 text-[#e9e9e9] text-[14px] font-[600] 

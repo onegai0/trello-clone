@@ -1,25 +1,25 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\",
+  "WorkspaceRootPath": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\simple-to-do\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\trello-clone\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\simple-to-do\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\trello-clone\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|solutionrelative:backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\simple-to-do\\backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\trello-clone\\backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|solutionrelative:backend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\simple-to-do\\backend\\models\\todo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\trello-clone\\backend\\models\\todo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|solutionrelative:backend\\models\\todo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\simple-to-do\\backend\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|c:\\users\\onegai\\desktop\\projetos\\trello-clone\\backend\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5CEE1AB-68C5-FCEC-EA61-653FFB609ED2}|backend\\backend.csproj|solutionrelative:backend\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -36,9 +36,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Properties\\launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "backend\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Properties\\launchSettings.json",
               "RelativeToolTip": "backend\\Properties\\launchSettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
@@ -48,24 +48,23 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\appsettings.json",
               "RelativeDocumentMoniker": "backend\\appsettings.json",
-              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\appsettings.json",
+              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\appsettings.json",
               "RelativeToolTip": "backend\\appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-24T23:18:33.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-24T23:18:33.605Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Program.cs",
               "RelativeDocumentMoniker": "backend\\Program.cs",
-              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Program.cs",
+              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Program.cs",
               "RelativeToolTip": "backend\\Program.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAAwBkAAAAKAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-22T19:10:31.381Z",
               "EditorCaption": ""
@@ -74,9 +73,9 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "TodoController.cs",
-              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Controllers\\TodoController.cs",
+              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Controllers\\TodoController.cs",
               "RelativeDocumentMoniker": "backend\\Controllers\\TodoController.cs",
-              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Controllers\\TodoController.cs",
+              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Controllers\\TodoController.cs",
               "RelativeToolTip": "backend\\Controllers\\TodoController.cs",
               "ViewState": "AQIAABIAAAAAAAAAAAAowDcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -86,9 +85,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Todo.cs",
-              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Models\\Todo.cs",
+              "DocumentMoniker": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Models\\Todo.cs",
               "RelativeDocumentMoniker": "backend\\Models\\Todo.cs",
-              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\simple-to-do\\backend\\Models\\Todo.cs",
+              "ToolTip": "C:\\Users\\Onegai\\Desktop\\Projetos\\trello-clone\\backend\\Models\\Todo.cs",
               "RelativeToolTip": "backend\\Models\\Todo.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
