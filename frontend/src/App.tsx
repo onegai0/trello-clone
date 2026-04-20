@@ -24,7 +24,7 @@ function App() {
   };
 
   const [lists, setLists] = useState<TodoListType[]>([
-    { id: 1, title: "Lista 1", items: [{ id: 1, title: "Tarefa 1", completed: false}] }
+    { id: 1, title: "Lista 1", items: [] }
   ])
 
 
@@ -100,7 +100,7 @@ function App() {
 
   const [popupActive, setPopupActive] = useState(false);
 
-    const {
+  const {
     todos,
     addTodo,
     toggleTodo,
@@ -227,25 +227,25 @@ function App() {
             </div>
 
 
-{lists.map(list => {
-  const listWithItems = {
-    ...list,
-    items: todos,
-  };
+            {lists.map(list => {
+              const listWithItems = {
+                ...list,
+                items: todos,
+              };
 
-  return (
-    <TodoList
-      key={list.id}
-      list={listWithItems}
-      onAddTodo={addTodo}
-      onToggleTodo={toggleTodo}
-      onEditList={editList}
-      onDeleteTodo={deleteTodo}
-      onDeleteList={deleteList}
-      onEditTodo={editTodo}
-    />
-  );
-})}
+              return (
+                <TodoList
+                  key={list.id}
+                  list={listWithItems}
+                  onAddTodo={addTodo}
+                  onToggleTodo={toggleTodo}
+                  onEditList={editList}
+                  onDeleteTodo={deleteTodo}
+                  onDeleteList={deleteList}
+                  onEditTodo={editTodo}
+                />
+              );
+            })}
 
             <div className=' flex'>
               <div className=" bg-[#4e4e4e] w-[300px]  h-[45px] rounded-md flex  px-2 items-center gap-2 text-[#e9e9e9] text-[14px] font-[600] 

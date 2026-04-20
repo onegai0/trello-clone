@@ -9,27 +9,38 @@ export interface TodoItemProps {
   todo: Todo;
   onToggle: (id: number) => void;
   onDelete: (id: number) => void;
-  onEdit: (updatedTodo: Todo) => void;
+  onEdit: (editTodo: Todo) => void;
 }
 
 export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
   const [editPopupActive, setEditPopupActive] = useState(false);
 
+  const formatDate = (str?: string) => {
 
+    if (!str) return "";
+    const date = new Date(str.replace(" ", "T").replace(" ", ""));
 
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${hours}:${minutes} • ${day}/${month}/${year}`;
+  };
   return (
     <div className='flex bg-[#292929] pt-1 h-auto rounded-md px-1.5 group' onClick={() => setEditPopupActive(true)}>
 
       {editPopupActive && (
         <Popup title="" onClose={() => setEditPopupActive(false)}>
-<TodoForm
-  onConfirm={(updatedTodo) => {
-    onEdit({ ...todo, ...updatedTodo });
-        setEditPopupActive(false);
-  }}
-  onCancel={() => setEditPopupActive(false)}
-  initialValue={todo}
-/>
+          <TodoForm
+            onConfirm={(editTodo) => {
+              onEdit({ ...todo, ...editTodo });
+              setEditPopupActive(false);
+            }}
+            onCancel={() => setEditPopupActive(false)}
+            initialValue={todo}
+          />
         </Popup>
       )}
       <div className='flex flex-col  w-full relative bg'>
@@ -61,8 +72,7 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
           </div>
 
           <div className='flex  flex-row  items-end w-full mt-auto truncate justify-between text-[12px] leading-4.5 h-5 font-[600] text-[#d3d3d3]'>
-            {/* <div className=" font-mono">10:30 • 01/08/2026</div> */}
-                        <div className=" font-mono">{todo.createdAt}</div>
+            <div className=" font-mono">{formatDate(todo.createdAt)}</div>
 
             <div >Mewing</div>
           </div>
