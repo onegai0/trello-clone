@@ -28,6 +28,14 @@ export function useTodos() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
   });
 
+
+const editMutation = useMutation({
+  mutationFn: (updatedTodo: Todo) => {
+    return todoService.update(updatedTodo);
+  },
+  onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+});
+
   const deleteMutation = useMutation({
     mutationFn: todoService.delete,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
@@ -40,6 +48,7 @@ export function useTodos() {
     addTodo: (title: string) => addMutation.mutate(title),
     toggleTodo: (id: number) => toggleMutation.mutate(id),
     deleteTodo: (id: number) => deleteMutation.mutate(id),
+    editTodo: (updatedTodo: Todo) => editMutation.mutate(updatedTodo),
     isAdding: addMutation.isPending,
   };
 }

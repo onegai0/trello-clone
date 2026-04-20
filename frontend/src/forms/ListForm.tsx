@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Form } from '../interfaces/IForm';
 interface ListFormProps  extends Form {
-initialBorder?: boolean;
+  initialBorder?: boolean;
 }
 
 export function ListForm({ onConfirm, onCancel, initialValue = "" }: ListFormProps) {

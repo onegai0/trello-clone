@@ -14,20 +14,23 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod());
 });
 
-var connectionString = "Host=db;Port=5432;Username=postgres;Password=grandeonegai;Database=meubanco";
+
+var connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 	options.UseNpgsql(connectionString));
-
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
 using (var scope = app.Services.CreateScope())
 {
 	var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 	db.Database.Migrate();
 }
+
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthorization();

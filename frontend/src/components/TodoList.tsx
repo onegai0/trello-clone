@@ -6,22 +6,21 @@ import type { Todo } from '../interfaces/ITodo';
 import type { TodoListType } from "../interfaces/ITodoList";
 import { Popup } from "./Popup";
 import { useState } from 'react';
-import { TodoForm } from "../forms/TodoForm";
 import { ListForm } from "../forms/ListForm";
 
 export interface TodoListProps {
     list: TodoListType;
     onAddTodo: (text: string) => void;
-    onEditTodo: (listId: number, todoId: number, text: string) => void;
+    onEditTodo: ( updatedTodo: Todo) => void;
     onToggleTodo: (listId: number, todoId: number) => void;
     onDeleteTodo: (listId: number, todoId: number) => void;
     onEditList: (listId: number, text: string) => void;
     onDeleteList: (listId: number) => void;
 }
-export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditList, onDeleteList, onEditTodo }: TodoListProps) {
+export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditList, onDeleteList, onEditTodo }: TodoListProps) { // eslint-disable-line
 
     const [editPopupActive, setEditPopupActive] = useState(false);
-    const [addPopupActive, setAddPopupActive] = useState(false);
+    const [addPopupActive, setAddPopupActive] = useState(false); // eslint-disable-line
     const completed = list.items.filter(todo => todo.completed).length;
     const percentage = list.items.length > 0 ? (completed / list.items.length) * 100 : 0;
 
@@ -94,7 +93,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
 
                                 <div className="flex flex-col gap-2 overflow-y-auto">
                                     {list.items.map((todo: Todo) => (
-                                        <TodoItem key={todo.id} todo={todo} onToggle={() => onToggleTodo(list.id, todo.id)} onDelete={() => onDeleteTodo(todo.id, list.id)} onEdit={(todoId, title) => onEditTodo(list.id, todoId, title)} />
+                                        <TodoItem key={todo.id} todo={todo} onToggle={() => onToggleTodo(todo.id, list.id)} onDelete={() => onDeleteTodo(todo.id, list.id)} onEdit={(updatedTodo) => onEditTodo(updatedTodo)} />
                                     ))}
                                 </div>
 
@@ -107,17 +106,17 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                             <div >Adicionar tarefa</div>
 
 
-                            {addPopupActive && (
+                            {/* {addPopupActive && (
                                 <Popup title="" onClose={() => setAddPopupActive(false)}>
                                     <TodoForm
-                                        onConfirm={(title) => {
-                                            onAddTodo( title);
+                                        onConfirm={(newTodo) => {
+                                            onAddTodo( {...todo, ...newTodo});
                                             setAddPopupActive(false);
                                         }}
                                         onCancel={() => setAddPopupActive(false)}
                                     />
                                 </Popup>
-                            )}
+                            )} */}
                         </div>
                     </div>
 

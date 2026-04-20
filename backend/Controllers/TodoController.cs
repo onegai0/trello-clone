@@ -30,21 +30,35 @@ public class TodoController : ControllerBase
 	}
 
 	[HttpPost]
-	public IActionResult Create([FromBody] Todo todo)
+	public IActionResult Create([FromBody] ITodo todo)
 	{
+
+		todo.CreatedAt = DateTimeOffset.UtcNow;
+
+
 		_context.Todos.Add(todo);
 		_context.SaveChanges();
 		return Created("", todo);
 	}
 
 	[HttpPut("{id}")]
-	public IActionResult Update(int id, [FromBody] Todo todo)
+	public IActionResult Update(int id, [FromBody] ITodo todo)
 	{
 		var existing = _context.Todos.Find(id);
 		if (existing == null) return NotFound();
 
+		existing.Priority = todo.Priority;
+		existing.Order = todo.Order;
+
 		existing.Title = todo.Title;
-		existing.IsFinished = todo.IsFinished;
+		existing.Description = todo.Description;
+		existing.Tag = todo.Tag;
+
+		existing.Completed = todo.Completed;
+
+		existing.CreatedAt = todo.CreatedAt;
+		existing.DueDate = todo.DueDate;
+		existing.CompletedAt = todo.CompletedAt;
 
 		_context.SaveChanges();
 		return Ok(existing);

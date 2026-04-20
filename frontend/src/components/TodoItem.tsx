@@ -1,6 +1,6 @@
 import Checkbox from "./ui/Checkbox";
 import RemoveIcon from '/src/assets/trash.svg?react'
-import type { Todo } from '../interfaces/ITodo';
+import { type Todo } from '../interfaces/ITodo';
 import { useState } from "react";
 import { Popup } from "./Popup";
 import { TodoForm } from "../forms/TodoForm";
@@ -9,7 +9,7 @@ export interface TodoItemProps {
   todo: Todo;
   onToggle: (id: number) => void;
   onDelete: (id: number) => void;
-  onEdit: (id: number, text: string) => void;
+  onEdit: (updatedTodo: Todo) => void;
 }
 
 export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
@@ -22,14 +22,14 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
 
       {editPopupActive && (
         <Popup title="" onClose={() => setEditPopupActive(false)}>
-          <TodoForm
-            onConfirm={(title) => {
-              onEdit(todo.id, title);
-              setEditPopupActive(false);
-            }}
-            onCancel={() => setEditPopupActive(false)}
-            initialValue={todo.title}
-          />
+<TodoForm
+  onConfirm={(updatedTodo) => {
+    onEdit({ ...todo, ...updatedTodo });
+        setEditPopupActive(false);
+  }}
+  onCancel={() => setEditPopupActive(false)}
+  initialValue={todo}
+/>
         </Popup>
       )}
       <div className='flex flex-col  w-full relative bg'>
@@ -61,7 +61,9 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
           </div>
 
           <div className='flex  flex-row  items-end w-full mt-auto truncate justify-between text-[12px] leading-4.5 h-5 font-[600] text-[#d3d3d3]'>
-            <div className=" font-mono">10:30 • 01/08/2026</div>
+            {/* <div className=" font-mono">10:30 • 01/08/2026</div> */}
+                        <div className=" font-mono">{todo.createdAt}</div>
+
             <div >Mewing</div>
           </div>
         </div>

@@ -24,7 +24,7 @@ function App() {
   };
 
   const [lists, setLists] = useState<TodoListType[]>([
-    { id: 1, title: "Lista 1", items: [{ id: 1, title: "Tarefa 1", completed: false }] }
+    { id: 1, title: "Lista 1", items: [{ id: 1, title: "Tarefa 1", completed: false}] }
   ])
 
 
@@ -35,22 +35,22 @@ function App() {
   const editList = (id: number, title: string) => {
     setLists(prev => prev.map(list => list.id === id ? { ...list, title } : list))
   }
-  function editTodo(listId: number, todoId: number, t: string) {
-    setLists(prev =>
-      prev.map(list =>
-        list.id === listId
-          ? {
-            ...list,
-            items: list.items.map(item =>
-              item.id === todoId
-                ? { ...item, title: t }
-                : item
-            )
-          }
-          : list
-      )
-    );
-  }
+  // function editTodo(listId: number, todoId: number, t: string) {
+  //   setLists(prev =>
+  //     prev.map(list =>
+  //       list.id === listId
+  //         ? {
+  //           ...list,
+  //           items: list.items.map(item =>
+  //             item.id === todoId
+  //               ? { ...item, title: t }
+  //               : item
+  //           )
+  //         }
+  //         : list
+  //     )
+  //   );
+  // }
 
 
   const deleteList = (id: number) => {
@@ -105,6 +105,7 @@ function App() {
     addTodo,
     toggleTodo,
     deleteTodo,
+    editTodo,
   } = useTodos();
 
   return (
