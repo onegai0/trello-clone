@@ -6,10 +6,10 @@ import FilterIcon from '/src/assets/filter.svg?react'
 
 import { useServerStatus } from './hooks/serverStatus'
 import { TodoList } from './components/TodoList';
-import type { TodoListType } from "./interfaces/ITodoList"
 import { Popup } from './components/Popup';
 import { ListForm } from './forms/ListForm';
-import { useTodos } from './hooks/useTodos';
+import { useLists } from './hooks/useList';
+import { useTodos } from "./hooks/useTodos"
 
 
 function App() {
@@ -22,40 +22,6 @@ function App() {
     setOpen(false);
 
   };
-
-  const [lists, setLists] = useState<TodoListType[]>([
-    { id: 1, title: "Lista 1", items: [] }
-  ])
-
-
-  const addList = (id: number, title: string) => {
-    setLists(prev => [...prev, { id, title, items: [] }])
-  }
-
-  const editList = (id: number, title: string) => {
-    setLists(prev => prev.map(list => list.id === id ? { ...list, title } : list))
-  }
-  // function editTodo(listId: number, todoId: number, t: string) {
-  //   setLists(prev =>
-  //     prev.map(list =>
-  //       list.id === listId
-  //         ? {
-  //           ...list,
-  //           items: list.items.map(item =>
-  //             item.id === todoId
-  //               ? { ...item, title: t }
-  //               : item
-  //           )
-  //         }
-  //         : list
-  //     )
-  //   );
-  // }
-
-
-  const deleteList = (id: number) => {
-    setLists(prev => prev.filter(list => list.id !== id));
-  }
 
 
   const statusColor: Record<number, string> = {
@@ -99,14 +65,16 @@ function App() {
   }
 
   const [popupActive, setPopupActive] = useState(false);
-
   const {
-    todos,
     addTodo,
     toggleTodo,
     deleteTodo,
     editTodo,
   } = useTodos();
+  const { lists, addList, deleteList, editList } = useLists();
+
+
+
 
   return (
     <>
@@ -145,7 +113,7 @@ function App() {
                 <div className=' bg-white h-px '></div>
 
                 <div
-                  className={`absolute left-0 w-full  bg-[#161616]  rounded top-12 overflow-y-auto max-h-[222px] custom-scroll ${open ? "block" : "hidden"}`}
+                  className={`absolute left-0 w-full  bg-[#161616]  rounded top-12 overflow-y-auto max-h-[222px] custom-scroll z-100 ${open ? "block" : "hidden"}`}
                 >
                   {options
                     .filter((option) => option !== selected)
@@ -208,7 +176,7 @@ function App() {
 
         </header>
 
-        <section className="flex h-full py-[18px]  overflow-hidden">
+        <section className="flex h-full py-[18px]  overflow-hidden z-0">
 
           {/* <div className="bg-[#161616] w-[1200px] rounded-md">
     
@@ -228,21 +196,17 @@ function App() {
 
 
             {lists.map(list => {
-              const listWithItems = {
-                ...list,
-                items: todos,
-              };
-
               return (
                 <TodoList
                   key={list.id}
-                  list={listWithItems}
-                  onAddTodo={addTodo}
-                  onToggleTodo={toggleTodo}
+                  list={list}
                   onEditList={editList}
-                  onDeleteTodo={deleteTodo}
                   onDeleteList={deleteList}
+                  onAddTodo={addTodo}
+                  onDeleteTodo={deleteTodo}
+                  onToggleTodo={toggleTodo}
                   onEditTodo={editTodo}
+
                 />
               );
             })}
@@ -256,8 +220,8 @@ function App() {
                 {popupActive && (
                   <Popup title="" onClose={() => setPopupActive(false)}>
                     <ListForm
-                      onConfirm={(title) => {
-                        addList(lists.length + 1, title);
+                      onConfirm={(newList) => {
+                        addList({ title: "", id: 0, items: [], ...newList });
                         setPopupActive(false);
                       }}
                       onCancel={() => setPopupActive(false)}

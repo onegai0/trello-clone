@@ -10,4 +10,5 @@ export interface Todo {
     createdAt: string;
     dueDate?: string;
     completedAt?: string;
+    todoListId? : number;
 }

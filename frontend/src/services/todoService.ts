@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Todo } from '../interfaces/ITodo';
 
-const api = axios.create({baseURL: import.meta.env.VITE_API_URL, headers: { "Content-Type": "application/json" }});
+const api = axios.create({baseURL: import.meta.env.VITE_API_URL ?? 'https://localhost:5254', headers: { "Content-Type": "application/json" }});
 
 export const todoService = {
   getAll: () =>

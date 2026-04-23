@@ -28,5 +28,12 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  # cloudflared:
+  #   image: cloudflare/cloudflared:latest
+  #   command: tunnel --url http://frontend:80
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - frontend
+
 volumes:
   pgdata:

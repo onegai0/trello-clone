@@ -15,7 +15,7 @@ export interface TodoListProps {
     onEditTodo: (editTodo: Todo) => void;
     onToggleTodo: (toggleTodo: Todo) => void;
     onDeleteTodo: (listId: number, todoId: number) => void;
-    onEditList: (listId: number, text: string) => void;
+    onEditList: (editList: TodoListType) => void;
     onDeleteList: (listId: number) => void;
 }
 export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditList, onDeleteList, onEditTodo }: TodoListProps) {
@@ -43,7 +43,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                     <div className="  p-1 gap-2 flex flex-col h-full">
 
                         <div className="rounded-md relative group text-[#e9e9e9] wrap-break-word font-[600] text-[14px] leading-4 p-1.5 hover:bg-[#252525]"
-                            onClick={() => setEditPopupActive(true)}>
+                            onClick={() => setEditPopupActive(false)}>
 
                             <span className="break-words">{list.title}</span>
 
@@ -59,12 +59,12 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                             {editPopupActive && (
                                 <Popup title="" onClose={() => setEditPopupActive(false)}>
                                     <ListForm
-                                        onConfirm={(title) => {
-                                            onEditList(list.id, title);
+                                        onConfirm={(editList) => {
+                                            onEditList({ ...list, ...editList });
                                             setEditPopupActive(false);
                                         }}
                                         onCancel={() => setEditPopupActive(false)}
-                                        initialValue={list.title}
+                                        initialValue={list}
                                     />
                                 </Popup>
                             )}
@@ -111,7 +111,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                                 <Popup title="" onClose={() => setAddPopupActive(false)}>
                                     <TodoForm
                                         onConfirm={(newTodo) => {
-                                            onAddTodo({ title: "", completed: false, ...newTodo });
+                                            onAddTodo({ title: "", completed: false, todoListId: list.id, ...newTodo });
                                             setAddPopupActive(false);
                                         }}
                                         onCancel={() => setAddPopupActive(false)}

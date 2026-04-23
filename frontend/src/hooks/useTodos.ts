@@ -7,7 +7,7 @@ const QUERY_KEY = ["todos"];
 export function useTodos() {
   const queryClient = useQueryClient();
 
-  // @ts-expect-error deixa ai po
+  // @ts-expect-error to remove later / new useListTodo
   const { data: todos = [], isFetching, hasFetchError } = useQuery({
     queryKey: QUERY_KEY,
     queryFn: () => todoService.getAll().then((todos) =>
@@ -20,27 +20,37 @@ export function useTodos() {
     mutationFn: (todo: Omit<Todo, "createdAt" | "id">) => {
       return todoService.add(todo);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["todos"] });
+        queryClient.invalidateQueries({ queryKey: ["lists"] }); 
+    },
+
   });
 
   const toggleMutation = useMutation({
     mutationFn: (todo: Todo) =>
       todoService.update({ ...todo, completed: !todo.completed }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-  });
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["todos"] });
+        queryClient.invalidateQueries({ queryKey: ["lists"] }); 
+    },  });
 
 
   const editMutation = useMutation({
     mutationFn: (todo: Todo) => {
       return todoService.update(todo);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-  });
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["todos"] });
+        queryClient.invalidateQueries({ queryKey: ["lists"] }); 
+    },  });
 
   const deleteMutation = useMutation({
     mutationFn: todoService.delete,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
-  });
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["todos"] });
+        queryClient.invalidateQueries({ queryKey: ["lists"] }); 
+    },  });
 
   return {
     todos,

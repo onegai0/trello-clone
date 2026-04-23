@@ -2,9 +2,32 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
+public class CreateTodoDto
+{
+	public int Priority { get; set; }
+	public int Order { get; set; }
+	public string Title { get; set; } = string.Empty;
+	public string Description { get; set; } = string.Empty;
+	public string Tag { get; set; } = string.Empty;
+	public bool Completed { get; set; } = false;
+	public DateTimeOffset? DueDate { get; set; }
+	public int TodoListId { get; set; }
+}
+
+public class UpdateTodoDto
+{
+	public int Priority { get; set; }
+	public int Order { get; set; }
+	public string Title { get; set; } = string.Empty;
+	public string Description { get; set; } = string.Empty;
+	public string Tag { get; set; } = string.Empty;
+	public bool Completed { get; set; } = false;
+	public DateTimeOffset CreatedAt { get; set; }
+	public DateTimeOffset? DueDate { get; set; }
+}
+
 [ApiController]
 [Route("api/[controller]")]
-
 
 public class TodoController : ControllerBase
 {
@@ -30,35 +53,44 @@ public class TodoController : ControllerBase
 	}
 
 	[HttpPost]
-	public IActionResult Create([FromBody] ITodo todo)
+	public IActionResult Create([FromBody] CreateTodoDto dto)
 	{
+		// Valida se a lista existe antes de inserir
+		var listExists = _context.TodoLists.Any(l => l.Id == dto.TodoListId);
+		if (!listExists) return BadRequest("TodoList não encontrada.");
 
-		todo.CreatedAt = DateTimeOffset.UtcNow;
-
+		var todo = new Todo
+		{
+			Priority = dto.Priority,
+			Order = dto.Order,
+			Title = dto.Title,
+			Description = dto.Description,
+			Tag = dto.Tag,
+			Completed = dto.Completed,
+			DueDate = dto.DueDate,
+			TodoListId = dto.TodoListId,
+			CreatedAt = DateTimeOffset.UtcNow,
+		};
 
 		_context.Todos.Add(todo);
 		_context.SaveChanges();
 		return Created("", todo);
 	}
-
 	[HttpPut("{id}")]
-	public IActionResult Update(int id, [FromBody] ITodo todo)
+	public IActionResult Update(int id, [FromBody] UpdateTodoDto dto)
 	{
 		var existing = _context.Todos.Find(id);
 		if (existing == null) return NotFound();
 
-		existing.Priority = todo.Priority;
-		existing.Order = todo.Order;
-
-		existing.Title = todo.Title;
-		existing.Description = todo.Description;
-		existing.Tag = todo.Tag;
-
-		existing.Completed = todo.Completed;
-
-		existing.CreatedAt = todo.CreatedAt;
-		existing.DueDate = todo.DueDate;
-		existing.CompletedAt = todo.CompletedAt;
+		existing.Priority = dto.Priority;
+		existing.Order = dto.Order;
+		existing.Title = dto.Title;
+		existing.Description = dto.Description;
+		existing.Tag = dto.Tag;
+		existing.Completed = dto.Completed;
+		existing.CreatedAt = dto.CreatedAt;
+		existing.DueDate = dto.DueDate;
+		existing.CompletedAt = dto.Completed ? DateTimeOffset.UtcNow : null; 
 
 		_context.SaveChanges();
 		return Ok(existing);
