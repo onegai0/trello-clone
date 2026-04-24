@@ -9,6 +9,7 @@ interface TodoFormProps {
 
 export function TodoForm({ onConfirm, onCancel, initialValue = {} }: TodoFormProps) {
   const [value, setValue] = useState(initialValue);
+  const set = (field: Partial<Todo>) => setValue(v => ({ ...v, ...field }));
 
   return (
     <div className="flex flex-col gap-2">
@@ -17,13 +18,60 @@ export function TodoForm({ onConfirm, onCancel, initialValue = {} }: TodoFormPro
         type="text"
         placeholder="Nome da tarefa..."
         value={value.title ?? ""}
-        onChange={(e) => setValue({ ...value, title: e.target.value })}
+        onChange={(e) => set({ title: e.target.value })}
         onKeyDown={(e) => e.key === "Enter" && value.title?.trim() && onConfirm(value)}
         className="bg-[#272727] text-white rounded-md px-3 py-2 outline-none focus:ring-2"
       />
 
-      {/* futuramente adiciona campos aqui */}
-      {/* <input value={value.description} onChange={...} /> */}
+      <textarea
+        placeholder="Descrição..."
+        value={value.description ?? ""}
+        onChange={(e) => set({ description: e.target.value })}
+        className="bg-[#272727] text-white rounded-md px-3 py-2 outline-none focus:ring-2 resize-none"
+        rows={3}
+      />
+
+      <input
+        type="text"
+        placeholder="Tag..."
+        value={value.tag ?? ""}
+        onChange={(e) => set({ tag: e.target.value })}
+        className="bg-[#272727] text-white rounded-md px-3 py-2 outline-none focus:ring-2"
+      />
+
+      <select
+        value={value.priority ?? ""}
+        onChange={(e) => set({ priority: e.target.value ? Number(e.target.value) : undefined })}
+        className="bg-[#272727] text-white rounded-md px-3 py-2 outline-none focus:ring-2"
+      >
+        <option value="">Prioridade...</option>
+        <option value="1">Baixa</option>
+        <option value="2">Média</option>
+        <option value="3">Alta</option>
+      </select>
+
+      <input
+        type="datetime-local"
+        value={value.dueDate ? new Date(value.dueDate).toLocaleString('sv').slice(0, 16) : ""}
+        onChange={(e) => {
+          if (!e.target.value) return set({ dueDate: undefined });
+          const [datePart, timePart] = e.target.value.split('T');
+          const [year, month, day] = datePart.split('-').map(Number);
+          const [hour, minute] = timePart.split(':').map(Number);
+          const date = new Date(year, month - 1, day, hour, minute);
+          set({ dueDate: date.toISOString() });
+        }}
+        className="bg-[#272727] text-white rounded-md px-3 py-2 outline-none focus:ring-2"
+      />
+
+      <label className="flex items-center gap-2 text-white px-1">
+        <input
+          type="checkbox"
+          checked={value.completed ?? false}
+          onChange={(e) => set({ completed: e.target.checked })}
+        />
+        Concluída
+      </label>
 
       <div className="flex justify-end gap-2">
         <button onClick={onCancel} className="text-gray-400 hover:text-white px-4 py-2 cursor-pointer">

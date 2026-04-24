@@ -5,7 +5,6 @@ const api = axios.create({ baseURL: import.meta.env.VITE_API_URL ?? 'https://loc
 export const listService = {
     getAll: () =>
         api.get<TodoListType[]>("/api/todolist").then((res) => res.data),
-
     add: (list: TodoListType) =>
         api.post<TodoListType>("/api/todolist", list).then((res) => res.data),
 

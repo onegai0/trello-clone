@@ -2,10 +2,11 @@
 export interface Todo {
     id: number;
     priority?: number;
-    order?: number;
+    order: string;
     title: string;
     description?: string;
-    tag?: string;
+    file? : string[];
+    tag?: string[];
     completed: boolean;
     createdAt: string;
     dueDate?: string;

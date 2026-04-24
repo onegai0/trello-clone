@@ -8,6 +8,8 @@ import { Popup } from "./Popup";
 import { useState } from 'react';
 import { ListForm } from "../forms/ListForm";
 import { TodoForm } from "../forms/TodoForm";
+import { generateKeyBetween } from "fractional-indexing";
+
 
 export interface TodoListProps {
     list: TodoListType;
@@ -27,8 +29,12 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
 
     const [percentageType, setPercentageType] = useState(true);
 
+    const lastOrder = list.items.length > 0
+    ? [...list.items].sort((a, b) => a.order < b.order ? -1 : 1).at(-1)!.order
+    : null;
 
 
+// Desabilitei o edit temporariamente, ele tá sendo ativado qnd clica no botão de deltar
 
 
     return (
@@ -111,7 +117,7 @@ export function TodoList({ list, onAddTodo, onToggleTodo, onDeleteTodo, onEditLi
                                 <Popup title="" onClose={() => setAddPopupActive(false)}>
                                     <TodoForm
                                         onConfirm={(newTodo) => {
-                                            onAddTodo({ title: "", completed: false, todoListId: list.id, ...newTodo });
+                                            onAddTodo({ title: "", completed: false, order: generateKeyBetween(lastOrder, null), todoListId: list.id, ...newTodo });
                                             setAddPopupActive(false);
                                         }}
                                         onCancel={() => setAddPopupActive(false)}

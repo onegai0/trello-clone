@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 public class CreateTodoListDto
 {
-	public int Order { get; set; }
+	public string Order { get; set; } = string.Empty;
 	public string Title { get; set; } = string.Empty;
 	public List<Todo> Items { get; set; } = new List<Todo>();
+	public int ProjectID { get; set; }
 }
 public class UpdateTodoListDto
 {
-	public int Order { get; set; }
+	public string Order { get; set; } = string.Empty;
 	public string Title { get; set; } = string.Empty;
 }
 
@@ -48,7 +49,9 @@ public class TodoListController : ControllerBase
 		{
 			Order = dto.Order,
 			Title = dto.Title,
-			Items = dto.Items ?? new List<Todo>()
+			Items = dto.Items ?? new List<Todo>(),
+			ProjectId = dto.ProjectID
+
 		};
 		_context.TodoLists.Add(list);
 		_context.SaveChanges();
@@ -63,7 +66,6 @@ public class TodoListController : ControllerBase
 
 		existing.Order = dto.Order;
 		existing.Title = dto.Title;
-		// se quiser atualizar items também, adicione aqui
 
 		_context.SaveChanges();
 		return Ok(existing);
@@ -79,11 +81,5 @@ public class TodoListController : ControllerBase
 		_context.SaveChanges();
 
 		return NoContent();
-	}
-
-	[HttpGet("health")]
-	public IActionResult Health()
-	{
-		return Ok("ok");
 	}
 }

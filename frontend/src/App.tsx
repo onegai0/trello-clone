@@ -4,77 +4,32 @@ import AddIcon from '/src/assets/add.svg?react'
 import RemoveIcon from '/src/assets/trash.svg?react'
 import FilterIcon from '/src/assets/filter.svg?react'
 
-import { useServerStatus } from './hooks/serverStatus'
 import { TodoList } from './components/TodoList';
 import { Popup } from './components/Popup';
 import { ListForm } from './forms/ListForm';
-import { useLists } from './hooks/useList';
+import { useLists } from './hooks/useLists';
 import { useTodos } from "./hooks/useTodos"
-
+import { generateKeyBetween } from "fractional-indexing";
+import { useProjects } from './hooks/useProjects';
 
 function App() {
 
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState("Selecionar Projeto");
-  const { status } = useServerStatus();
-  const handleSelect = (value: string) => {
-    setSelected(value);
-    setOpen(false);
+  // const [selected, setSelected] = useState("Selecionar Projeto");
+  // const [options, setOptions] = useState<string[]>(["Onai",
+  //   "Micro Machines",
+  //   "Blender Tutorials",
+  //   "Supermarket",]);
 
-  };
-
-
-  const statusColor: Record<number, string> = {
-    0: 'bg-yellow-400',
-    1: 'bg-red-500',
-    2: 'bg-green-500',
-  }
-
-
-  const [options, setOptions] = useState<string[]>(["Onai",
-    "Micro Machines",
-    "Blender Tutorials",
-    "Supermarket",]);
-
-  function addItem(newItem: string) {
-    setOptions(prev => {
-      const exist = prev.some(item => item === newItem);
-      if (!exist) return handleSelect(newItem), [...prev, newItem];
-
-      let n = 0;
-
-      while (prev.some(item => item === `${newItem} (${n})`)) {
-        n++;
-      }
-
-      return handleSelect(`${newItem} (${n})`), [...prev, `${newItem} (${n})`];
-    })
-  }
-
-  function removeItem(value: string) {
-    setOptions(prev => {
-      const newOptions = prev.filter(item => item !== value)
-
-      const deletedIndex = prev.indexOf(value)
-      const previousItem = prev[deletedIndex - 1]
-
-      handleSelect(previousItem ?? newOptions[0] ?? "")
-
-      return newOptions
-    })
-  }
 
   const [popupActive, setPopupActive] = useState(false);
-  const {
-    addTodo,
-    toggleTodo,
-    deleteTodo,
-    editTodo,
-  } = useTodos();
-  const { lists, addList, deleteList, editList } = useLists();
-
-
-
+  const { projects, addProject, deleteProject} = useProjects();
+  const { addList, deleteList, editList } = useLists();
+  const { addTodo, toggleTodo, deleteTodo, editTodo } = useTodos();
+  const lists = projects[0]?.lists ?? [];
+  const lastOrder = lists.length > 0
+    ? [...lists].sort((a, b) => a.order < b.order ? -1 : 1).at(-1)!.order
+    : null;
 
   return (
     <>
@@ -102,7 +57,7 @@ function App() {
                   className="text-white cursor-pointer text-xs flex justify-between py-1.5 hover:bg-[#161616]   items-center "
                   onClick={() => setOpen(!open)}
                 >
-                  <h2 className="line-clamp-1">{selected}</h2>
+                  <h2 className="line-clamp-1">{projects[0]?.title}</h2>
                   <img
                     className="invert brightness-200"
                     width="20"
@@ -115,7 +70,7 @@ function App() {
                 <div
                   className={`absolute left-0 w-full  bg-[#161616]  rounded top-12 overflow-y-auto max-h-[222px] custom-scroll z-100 ${open ? "block" : "hidden"}`}
                 >
-                  {options
+                  {/* {options
                     .filter((option) => option !== selected)
                     .map((option) => (
                       <div
@@ -125,12 +80,12 @@ function App() {
                       >
                         {option}
                       </div>
-                    ))}
+                    ))} */}
                 </div>
               </div>
 
-              <AddIcon className="w-[20px] h-[20px]   text-gray-400 cursor-pointer hover:text-white" onClick={() => addItem("New Option")} />
-              <RemoveIcon className="w-[20px] h-[20px]  text-gray-400 cursor-pointer hover:text-white" onClick={() => removeItem(selected)} />
+              <AddIcon className="w-[20px] h-[20px]   text-gray-400 cursor-pointer hover:text-white" onClick={() => addProject({ id: 0, title: "alguma coisa", lists: [] })} />
+              <RemoveIcon className="w-[20px] h-[20px]  text-gray-400 cursor-pointer hover:text-white" onClick={() => deleteProject} />
 
             </div>
 
@@ -142,13 +97,13 @@ function App() {
           <div className='bar-position-fix '>
 
             {/* Status */}
-            <div className="relative group">
+            {/* <div className="relative group">
               <div className={`h-2 w-2  rounded-full  ${statusColor[status]}`}></div>
 
               <div className="absolute hidden group-hover:block  text-[14px] bg-gray-800 text-gray-200 px-2 rounded mr-2 right-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap">
                 {status === 0 ? "Loading" : status === 1 ? "Offline" : "Online"}
               </div>
-            </div>
+            </div> */}
 
             {/* Search */}
             <div className="relative w-[350px]   rounded  select-none">
@@ -221,7 +176,7 @@ function App() {
                   <Popup title="" onClose={() => setPopupActive(false)}>
                     <ListForm
                       onConfirm={(newList) => {
-                        addList({ title: "", id: 0, items: [], ...newList });
+                        addList({ title: "", id: 0, projectId: projects[0].id, order: generateKeyBetween(lastOrder, null), items: [], ...newList });
                         setPopupActive(false);
                       }}
                       onCancel={() => setPopupActive(false)}

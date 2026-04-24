@@ -1,5 +1,8 @@
 import Checkbox from "./ui/Checkbox";
 import RemoveIcon from '/src/assets/trash.svg?react'
+import ClipIcon from '/src/assets/clip.svg?react'
+import ClockIcon from '/src/assets/clock.svg?react'
+import DescriptionIcon from '/src/assets/description.svg?react'
 import { type Todo } from '../interfaces/ITodo';
 import { useState } from "react";
 import { Popup } from "./Popup";
@@ -16,18 +19,32 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
   const [editPopupActive, setEditPopupActive] = useState(false);
 
   const formatDate = (str?: string) => {
-
     if (!str) return "";
-    const date = new Date(str.replace(" ", "T").replace(" ", ""));
+    const date = new Date(str);
+    const now = new Date();
+
+    const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const currentYear = now.getFullYear();
+
+    const diffMs = date.getTime() - now.getTime();
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
 
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
 
-    return `${hours}:${minutes} • ${day}/${month}/${year}`;
+    const showYear = year !== currentYear;
+    const showTime = diffDays > -1 && diffDays < 1;
+
+    let result = `${day} ${month}`;
+    if (showYear) result += ` ${year}`;
+    if (showTime) result += ` ${hours}:${minutes}`;
+
+    return result;
   };
+
   return (
     <div>
 
@@ -44,45 +61,54 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
         </Popup>
       )}
 
-      <div className='relative flex bg-[#292929] pt-1 h-auto rounded-md px-1.5 group'>
+     <div className='relative flex bg-[#292929] py-1 h-auto rounded-md px-1.5 group'>
+  <div className='flex flex-col w-full relative'>
+    <div className="flex flex-col">
+      <div className='w-auto relative mt-0.5 ps-6 items-start leading-4.5 text-[14px] wrap-break-word text-lg text-[#e9e9e9] font-bold'>
+        <div className='absolute left-0 top-[0px]'>
+          <Checkbox checked={todo.completed} onChange={() => onToggle(todo.id)} />
+        </div>
 
-        <div className='flex flex-col  w-full relative bg'>
+        <div className="break-words select-none cursor-pointer" onClick={() => setEditPopupActive(true)}>
+          {todo.title}
+        </div>
 
+        <div className="size-[20px] absolute top-0 right-0 px-[14px] transition-opacity opacity-0 group-hover:opacity-100 bg-[#292929]" />
 
+        <RemoveIcon
+          className="size-[20px] absolute top-0 right-0 text-[#9c9c9c] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-white"
+          onClick={() => onDelete(todo.id)}
+        />
+      </div>
 
+      {(todo.completedAt || todo.dueDate || todo.tag || todo.file || todo.description) && (
+        <div className='flex flex-row items-center w-full mt-auto truncate justify-between text-[12px] font-[600] text-[#d3d3d3]'>
 
-
-          <div className=''>
-            <div className='w-auto relative mt-0.5 ps-6 items-start  leading-4.5 text-[14px] wrap-break-word text-lg text-[#e9e9e9] font-bold  '>
-
-              <div className=' absolute left-0 top-[0px]'>
-                <Checkbox
-                  checked={todo.completed}
-                  onChange={() => onToggle(todo.id)} />
-              </div>
-
-              <div className="break-words   select-none cursor-pointer" onClick={() => setEditPopupActive(true)}>{todo.title}</div>
-
-              <div className=" size-[20px] absolute top-0 right-0 px-[14px] transition-opacity opacity-0 group-hover:opacity-100  bg-[#292929]">
-
-              </div>
-
-              <RemoveIcon className="size-[20px] absolute top-0 right-0 text-[#9c9c9c] absolute  opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-white" onClick={() => {
-                onDelete(todo.id);
-              }} />
-
-            </div>
-
-            <div className='flex  flex-row  items-end w-full mt-auto truncate justify-between text-[12px] leading-4.5 h-5 font-[600] text-[#d3d3d3]'>
-              <div className=" font-mono  select-none cursor-pointer" onClick={() => setEditPopupActive(true)}>{todo.completed ? formatDate(todo.completedAt) : formatDate(todo.createdAt)}</div>
-
-              <div className=" select-none cursor-pointer" onClick={() => setEditPopupActive(true)}>Mewing</div>
-            </div>
+          <div className="font-mono gap-1 select-none cursor-pointer justify-center items-center flex flex-row tracking-tight" onClick={() => setEditPopupActive(true)}>
+            <ClockIcon className="size-3 translate-y-[6px]" />
+            <span className="translate-y-[6px]">
+              {todo.completed ? formatDate(todo.completedAt) : formatDate(todo.dueDate)}
+            </span>
           </div>
 
+          <div className="select-none cursor-pointer gap-2 justify-center items-center flex flex-row font-mono" onClick={() => setEditPopupActive(true)}>
+            <div className="flex flex-row justify-center gap-1 items-center text-[#d3d3d3]">
+              {!todo.file && (
+                <div className="flex flex-row gap-1 items-center font-mono">
+                  <ClipIcon className="size-3 translate-y-[6px]" />
+                  <span className="translate-y-[6px]">1</span>
+                </div>
+              )}
+              {!todo.description && <DescriptionIcon className="size-4 translate-y-[6px]" />}
+            </div>
+            {todo.tag && <span className="translate-y-[6px]">{todo.tag}</span>}
+          </div>
 
         </div>
-      </div>
+      )}
+    </div>
+  </div>
+</div>
     </div>
   );
 }

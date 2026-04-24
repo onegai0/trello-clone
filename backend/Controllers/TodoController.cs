@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 public class CreateTodoDto
 {
 	public int Priority { get; set; }
-	public int Order { get; set; }
+	public string Order { get; set; } = string.Empty;
 	public string Title { get; set; } = string.Empty;
 	public string Description { get; set; } = string.Empty;
 	public string Tag { get; set; } = string.Empty;
@@ -17,7 +17,7 @@ public class CreateTodoDto
 public class UpdateTodoDto
 {
 	public int Priority { get; set; }
-	public int Order { get; set; }
+	public string Order { get; set; } = string.Empty;
 	public string Title { get; set; } = string.Empty;
 	public string Description { get; set; } = string.Empty;
 	public string Tag { get; set; } = string.Empty;
@@ -106,11 +106,5 @@ public class TodoController : ControllerBase
 		_context.SaveChanges();
 
 		return NoContent();
-	}
-
-	[HttpGet("health")]
-	public IActionResult Health()
-	{
-		return Ok("ok");
 	}
 }

@@ -14,7 +14,7 @@ export default function Checkbox({ checked, onChange }: CheckboxProps) {
             />
 
             <div className="
-     size-4 border-2 rounded
+     size-4 border-[2px] rounded
     border-gray-400
 
     transition-colors duration-200
