@@ -64,15 +64,6 @@ export function TodoForm({ onConfirm, onCancel, initialValue = {} }: TodoFormPro
         className="bg-[#272727] text-white rounded-md px-3 py-2 outline-none focus:ring-2"
       />
 
-      <label className="flex items-center gap-2 text-white px-1">
-        <input
-          type="checkbox"
-          checked={value.completed ?? false}
-          onChange={(e) => set({ completed: e.target.checked })}
-        />
-        Concluída
-      </label>
-
       <div className="flex justify-end gap-2">
         <button onClick={onCancel} className="text-gray-400 hover:text-white px-4 py-2 cursor-pointer">
           Cancelar

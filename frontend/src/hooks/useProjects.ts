@@ -7,8 +7,7 @@ const QUERY_KEY = ["projects"];
 export function useProjects() {
   const queryClient = useQueryClient();
 
-  // @ts-expect-error to remove later / new useListTodo
-  const { data: projects = [], isFetching, hasFetchError } = useQuery({
+  const { data: projects = [], isLoading } = useQuery({
     queryKey: QUERY_KEY,
     queryFn: () => projectService.getAll().then((projects) =>
       projects
@@ -30,26 +29,40 @@ export function useProjects() {
     mutationFn: (project: Project) => {
       return projectService.add(project);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["lists"] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+
+    },
   });
 
   const editMutation = useMutation({
     mutationFn: (project: Project) => {
       return projectService.update(project);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["lists"] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+
+    },
   });
 
   const deleteMutation = useMutation({
     mutationFn: projectService.delete,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["lists"] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+
+    },
   });
 
   return {
     projects,
-    isFetching,
-    hasFetchError,
-    addProject: (addProject: Project) => addMutation.mutate(addProject),
+    isLoading,
+    addProject: (project: Project) => addMutation.mutateAsync(project),
     deleteProject: (id: number) => deleteMutation.mutate(id),
     editProject: (editProject: Project) => editMutation.mutate(editProject),
     isAdding: addMutation.isPending,

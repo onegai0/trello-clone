@@ -6,7 +6,7 @@ export interface Todo {
     title: string;
     description?: string;
     file? : string[];
-    tag?: string[];
+    tag?: string;
     completed: boolean;
     createdAt: string;
     dueDate?: string;
